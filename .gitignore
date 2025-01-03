@@ -1,0 +1,30 @@
+# Виртуальные окружения
+ep_env/
+
+# Кэш Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Логи и временные файлы
+*.log
+*.pot
+*.mo
+*.swp
+*.swo
+*.tmp
+
+# SQLite база данных (если используется)
+*.sqlite3
+
+# Конфигурации среды
+.env
+*.env
+secrets.json
+
+# Настройки IDE
+.idea/
+.vscode/
+
+# macOS системные файлы
+.DS_Store
