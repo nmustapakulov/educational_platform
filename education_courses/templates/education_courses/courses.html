@@ -1,0 +1,15 @@
+{% extends "education_courses/base.html" %}
+
+{% block page_header %}
+    <h2>Мои курсы</h2>
+{% endblock page_header %}
+
+{% block content %}
+    <ul>
+        {% for course in courses %}
+            <li>{{course}}</li>
+        {% empty %}
+            <li><h3>Пока что курсов не добавлены.</h3></li>
+        {% endfor %}
+    </ul>
+{% endblock content %}
