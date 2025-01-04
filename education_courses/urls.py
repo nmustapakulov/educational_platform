@@ -10,4 +10,6 @@ urlpatterns = [
     path('', views.index, name='index'),
     #Страница со списком всех курсов.
     path('courses/', views.courses, name='courses'),
+    #Страница с подробной информацией о курсе.
+    path('courses/<int:course_id>/', views.course, name='course'),
 ]

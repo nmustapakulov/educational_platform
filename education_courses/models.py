@@ -24,7 +24,7 @@ class Section(models.Model):
     order = models.PositiveIntegerField()
 
     def __str__(self):
-        return f"Section: {self.title} (Order: {self.order})"
+        return  self.title
 
 class Lecture(models.Model):
     section = models.ForeignKey(Section, on_delete=models.CASCADE)

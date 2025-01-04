@@ -7,7 +7,7 @@
 {% block content %}
     <ul>
         {% for course in courses %}
-            <li>{{course}}</li>
+            <li><a href="{% url 'education_courses:course' course.id %}" >{{course}}</a></li>
         {% empty %}
             <li><h3>Пока что курсов не добавлены.</h3></li>
         {% endfor %}
