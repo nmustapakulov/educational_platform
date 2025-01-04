@@ -1,3 +1,5 @@
 from django.shortcuts import render
 
-# Create your views here.
+def index(request):
+    """Домашняя страница приложения education_courses"""
+    return render(request, 'education_courses/index.html')

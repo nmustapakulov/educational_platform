@@ -34,6 +34,9 @@ INSTALLED_APPS = [
     # Мои приложения
     'education_courses',
 
+    # Сторонние приложения
+    'bootstrap4',
+
     # Приложения django по умолчанию
     'django.contrib.admin',
     'django.contrib.auth',
