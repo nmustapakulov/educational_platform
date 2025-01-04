@@ -12,4 +12,5 @@
             <li><h3>Пока что курсов не добавлены.</h3></li>
         {% endfor %}
     </ul>
+    <a class="btn btn-primary" href="{% url 'education_courses:new_course' %}" role="button">Добавить новый курс</a>
 {% endblock content %}
