@@ -9,22 +9,38 @@
     <div id="accordion">
         {% for section in sections %}
         <div class="card">
-            <div class="card-header" id="headingOne">
+            <div class="card-header" id="heading{{ forloop.counter }}">
                 <h5 class="mb-0">
-                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    {{section}}
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{ forloop.counter }}" aria-expanded="false" aria-controls="collapse{{ forloop.counter }}">
+                    {{ section.title }}
                     </button>
                 </h5>
             </div>
+            <div id="collapse{{ forloop.counter }}" class="collapse" aria-labelledby="heading{{ forloop.counter }}" data-parent="#accordion">
+                <div class="card-body">
+                    <ul>
+                        {% for lecture in section.lecture_set.all %}
+                        <li>
+                            <strong>{{ lecture.title }}</strong> <br>
+                            {{ lecture.description }}
+                        </li>
+                        {% empty %}
+                        <li>Нет доступных лекций</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
         {% empty %}
         <div class="card">
-            <div class="card-header" id="headingOne">
+            <div class="card-header" id="headingEmpty">
                 <h5 class="mb-0">
-                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        Collapsible Group Item #1
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseEmpty" aria-expanded="true" aria-controls="collapseEmpty">
+                        Нет доступных разделов
                     </button>
                 </h5>
             </div>
+        </div>
         {% endfor %}
     </div>
 {% endblock content %}
