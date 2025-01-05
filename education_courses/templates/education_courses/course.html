@@ -22,6 +22,7 @@
             </div>
             <div id="collapse{{ forloop.counter }}" class="collapse" aria-labelledby="heading{{ forloop.counter }}" data-parent="#accordion">
                 <div class="card-body">
+                    <a href="{% url 'education_courses:new_lecture' section.id  %}" >Добавить лекции</a>
                     <ul>
                         {% for lecture in section.lecture_set.all %}
                         <li>

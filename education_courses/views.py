@@ -93,3 +93,23 @@ def edit_lecture(request, lecture_id):
     context = {'lecture': lecture, 'section': section, 'form':form}
     return render(request, 'education_courses/edit_lecture.html', context)
 
+def new_lecture(request, section_id):
+    """Добавляет новую лекцию к разделу курса"""
+    section = Section.objects.get(id=section_id)
+    course = section.course
+    # Данные не отправлялись; создается пустая форма.
+    if request.method != 'POST':
+        form = LectureForm()
+    else:
+        # Отправлены данные POST; обработать данные.
+        form = LectureForm(data=request.POST)
+        if form.is_valid():
+            new_lecture = form.save(commit=False)
+            new_lecture.section = section
+            new_lecture.save()
+            return redirect('education_courses:course', course_id=course.id)
+        
+    # Вывести пустую или недействительную форму.
+    context = {'section': section, 'course': course, 'form':form}
+    return render(request, 'education_courses/new_lecture.html', context)
+
