@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Course
+from .models import Course, Section
 from .forms import CourseForm, SectionForm
 
 def index(request):
@@ -53,3 +53,21 @@ def new_entry(request, course_id):
     context = {'course': course, 'form': form}
     return render(request, 'education_courses/new_entry.html', context)
 
+def edit_section(request, section_id):
+    """Редактирует сущестующую раздел"""
+    section = Section.objects.get(id=section_id)
+    course = section.course
+
+    # Данные не отправлялись; создается пустая форма.
+    if request.method != 'POST':
+        form = SectionForm(instance=section)
+    else:
+        # Отправлены данные POST; обработать данные.
+        form = SectionForm(instance=section, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('education_courses:course', course_id=course.id)
+        
+    # Вывести пустую или недействительную форму.
+    context = {'section': section, 'course': course, 'form':form}
+    return render(request, 'education_courses/edit_section.html', context)

@@ -16,4 +16,6 @@ urlpatterns = [
     path('new_course/', views.new_course, name='new_course'),
     # Страница для добавления новый разделов для курса.
     path('new_entry/<int:course_id>/', views.new_entry, name='new_entry'),
+    # Страница для редактирования разделов курса.
+    path('edit_section/<int:section_id>/', views.edit_section, name='edit_section'),
 ]
