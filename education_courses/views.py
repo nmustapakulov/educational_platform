@@ -35,7 +35,9 @@ def new_course(request):
         # Отправлены данные POST; обработать данные.
         form = CourseForm(data=request.POST)
         if form.is_valid():
-            form.save()
+            new_course = form.save(commit=False)
+            new_course.owner = request.user
+            new_course.save()
             return redirect('education_courses:courses')
     
     # Вывести пустую или недействительную форму.
