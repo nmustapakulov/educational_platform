@@ -14,4 +14,6 @@ urlpatterns = [
     path('courses/<int:course_id>/', views.course, name='course'),
     #Страница для добавления новой темы.
     path('new_course/', views.new_course, name='new_course'),
+    # Страница для добавления новый разделов для курса.
+    path('new_entry/<int:course_id>/', views.new_entry, name='new_entry'),
 ]

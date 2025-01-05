@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Course
-from .forms import CourseForm
+from .forms import CourseForm, SectionForm
 
 def index(request):
     """Домашняя страница приложения education_courses"""
@@ -33,4 +33,23 @@ def new_course(request):
     # Вывести пустую или недействительную форму.
     context = {'form': form}
     return render(request, 'education_courses/new_course.html', context)
+
+def new_entry(request, course_id):
+    """Добавляет новый раздел для курса"""
+    course = Course.objects.get(id=course_id)
+    # Данные не отправлялись; создается пустая форма.
+    if request.method != 'POST':
+        form = SectionForm()
+    else:
+        # Отправлены данные POST; обработать данные.
+        form = SectionForm(data=request.POST)
+        if form.is_valid():
+            new_entry = form.save(commit=False)
+            new_entry.course = course
+            new_entry.save()
+            return redirect('education_courses:course', course_id=course.id)
+    
+    # Вывести пустую или недействительную форму.
+    context = {'course': course, 'form': form}
+    return render(request, 'education_courses/new_entry.html', context)
 

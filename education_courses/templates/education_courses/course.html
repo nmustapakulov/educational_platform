@@ -6,6 +6,9 @@
 {% endblock page_header %}
 
 {% block content %}
+    <p>
+        <a href="{% url 'education_courses:new_entry' course.id %}" >Добавить раздел</a>
+    </p>
     <div id="accordion">
         {% for section in sections %}
         <div class="card">

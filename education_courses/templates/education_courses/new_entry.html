@@ -1,0 +1,16 @@
+{% extends "education_courses/base.html" %}
+{% load bootstrap4 %}
+
+{% block page_header %}
+    <h2><a href="{% url 'education_courses:course' course.id %}">{{ course }}</a></h2>
+{% endblock page_header %}
+
+{% block content %}
+    <form action="{% url 'education_courses:new_entry' course.id %}" method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+        <button name="submit" class="btn btn-primary" >Добавить раздел</button>
+        {% endbuttons %}
+    </form>
+{% endblock content %}
