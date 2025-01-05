@@ -25,7 +25,7 @@
                     <ul>
                         {% for lecture in section.lecture_set.all %}
                         <li>
-                            <strong>{{ lecture.title }}</strong> <br>
+                            <strong>{{ lecture.title }}</strong> <a href="{% url 'education_courses:edit_lecture' lecture.id %}">Редактировать</a> <br>
                             {{ lecture.description }}
                         </li>
                         {% empty %}

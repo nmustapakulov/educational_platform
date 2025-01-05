@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from .models import Course, Section
-from .forms import CourseForm, SectionForm
+from .models import Course, Section, Lecture
+from .forms import CourseForm, SectionForm, LectureForm
 
 def index(request):
     """Домашняя страница приложения education_courses"""
@@ -71,3 +71,25 @@ def edit_section(request, section_id):
     # Вывести пустую или недействительную форму.
     context = {'section': section, 'course': course, 'form':form}
     return render(request, 'education_courses/edit_section.html', context)
+
+def edit_lecture(request, lecture_id):
+    lecture = Lecture.objects.get(id=lecture_id)
+    section = lecture.section
+    course = section.course
+
+    # Данные не отправлялись; создается пустая форма.
+    if request.method != 'POST':
+        form = LectureForm(instance=lecture)
+    else:
+        # Отправлены данные POST; обработать данные.
+        form = LectureForm(instance=lecture, data=request.POST)
+        if form.is_valid():
+            new_lecture = form.save(commit=False)
+            new_lecture.order = section.order
+            new_lecture.save()
+            return redirect('education_courses:course', course_id=course.id)
+        
+    # Вывести пустую или недействительную форму.
+    context = {'lecture': lecture, 'section': section, 'form':form}
+    return render(request, 'education_courses/edit_lecture.html', context)
+
