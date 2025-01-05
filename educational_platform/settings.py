@@ -33,7 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     # Мои приложения
     'education_courses',
-
+    'users',
     # Сторонние приложения
     'bootstrap4',
 

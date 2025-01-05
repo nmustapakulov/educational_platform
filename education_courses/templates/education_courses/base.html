@@ -25,6 +25,17 @@
                     <a class="nav-link" href="#">Мое обучение</a>
                 </li>
             </ul>
+            <ul class="navbar-nav ml-auto">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <span class="navbar-text">Привет, {{ user.username }}.</span>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'users:login' %}" >Авторизоваться</a>
+                    </li>
+                {% endif %}
+            </ul>
         </div>
     </nav>
 
