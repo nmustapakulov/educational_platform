@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Course, Section, Lecture
 from .forms import CourseForm, SectionForm, LectureForm
 from django.contrib.auth.decorators import login_required
+from django.http import Http404
 
 def index(request):
     """Домашняя страница приложения education_courses"""
@@ -10,13 +11,16 @@ def index(request):
 @login_required
 def courses(request):
     """Выводит список курсов."""
-    courses = Course.objects.order_by('date_added')
+    courses = Course.objects.filter(owner=request.user).order_by('date_added')
     context = {'courses':courses}
     return render(request, 'education_courses/courses.html', context)
 
 @login_required
 def course(request, course_id):
     course = Course.objects.get(id=course_id)
+    # Проверка того, что курс принадлежит текущему пользователю.
+    if course.owner != request.user:
+        raise Http404
     sections = course.section_set.order_by('order')
     context = {'course': course, 'sections': sections}
     return render(request, 'education_courses/course.html', context)
@@ -42,6 +46,9 @@ def new_course(request):
 def new_entry(request, course_id):
     """Добавляет новый раздел для курса"""
     course = Course.objects.get(id=course_id)
+    if course.owner != request.user:
+        raise Http404
+    
     # Данные не отправлялись; создается пустая форма.
     if request.method != 'POST':
         form = SectionForm()
@@ -63,6 +70,8 @@ def edit_section(request, section_id):
     """Редактирует сущестующую раздел"""
     section = Section.objects.get(id=section_id)
     course = section.course
+    if course.owner != request.user:
+        raise Http404
 
     # Данные не отправлялись; создается пустая форма.
     if request.method != 'POST':
@@ -83,6 +92,8 @@ def edit_lecture(request, lecture_id):
     lecture = Lecture.objects.get(id=lecture_id)
     section = lecture.section
     course = section.course
+    if course.owner != request.user:
+        raise Http404
 
     # Данные не отправлялись; создается пустая форма.
     if request.method != 'POST':
@@ -105,6 +116,9 @@ def new_lecture(request, section_id):
     """Добавляет новую лекцию к разделу курса"""
     section = Section.objects.get(id=section_id)
     course = section.course
+    if course.owner != request.user:    
+        raise Http404
+
     # Данные не отправлялись; создается пустая форма.
     if request.method != 'POST':
         form = LectureForm()
